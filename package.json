@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "firebase": "^9.22.2",
+    "firebaseui": "^6.0.2",
     "flowbite": "^1.6.6",
     "flowbite-react": "^0.4.7",
     "next": "12.3",
