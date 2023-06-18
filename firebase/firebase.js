@@ -1,7 +1,9 @@
+import { useState } from "react";
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,13 +30,14 @@ async function getPHDiary(db) {
 }
 
 const auth = getAuth()
-const handleSignIn = (e) => {
+const handleSignIn = (e, email, password) => {
   e.preventDefault()
 
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user
       console.log(`Signed in: ${user}`)
+      console.log(`Auth Object: ${auth}`)
     })
     .catch((error) => {
       const errorCode = error.code
@@ -44,5 +47,23 @@ const handleSignIn = (e) => {
     })
 }
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const uid = user;
+    console.log(JSON.stringify(user))
+  } else {
+    // User is signed out
+    console.log("user is signed out.")
+  }
+});
 
-export { getPHDiary, handleSignIn }
+
+const showCurrentUser = (e) => {
+  e.preventDefault()
+  const user =  auth.currentUser
+  console.log(`Currently signed-in as: ${user.email}`)
+  }
+
+export { getPHDiary, handleSignIn, showCurrentUser }
