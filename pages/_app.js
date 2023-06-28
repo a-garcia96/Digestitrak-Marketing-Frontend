@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     getAuthState(setUser)
-  })
+  }, [])
 
   return (
     <AuthContext.Provider value={{user, setUser}}>

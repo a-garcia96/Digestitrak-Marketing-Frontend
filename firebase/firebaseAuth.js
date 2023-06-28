@@ -1,8 +1,8 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { app } from "./firebase";
+import { useEffect } from "react";
 
 const auth = getAuth()
-
 
 const getAuthState = (action) => {
   onAuthStateChanged(auth, (userObject) => {
