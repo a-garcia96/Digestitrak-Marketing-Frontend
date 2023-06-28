@@ -15,7 +15,7 @@ const index = () => {
 
   return (
     <>
-        <Login />
+        <Login type={'login'} />
     </>
   )
 }
