@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
+import Link from "next/link";
 
 export default function Home() {
-
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   return (
     <div>
@@ -14,9 +14,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>GERD Tracker</h1>
-      {user.isSignedIn && <h1>Welcome, you are currently signed-in as: {user.email}</h1>}
-      {!user.isSignedIn && <h1>Please login</h1>}
-
+      {user.isSignedIn && (
+        <h1>Welcome, you are currently signed-in as: {user.displayName}</h1>
+      )}
+      {!user.isSignedIn && (
+      <>
+        <h1>Please login</h1>
+        <div className="bg-blue-500 max-w-[100px] rounded-full px-2 py-4 ml-4 text-center">
+          <Link href='/login'>Login</Link>
+        </div>
+      </>
+    )}
     </div>
   );
 }

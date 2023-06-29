@@ -2,10 +2,9 @@ import React, { useState, useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import { auth } from "../../firebase/firebaseAuth";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -17,27 +16,48 @@ const Login = ({ type }) => {
   const [password, setPassword] = useState(null);
   const router = useRouter();
 
-  const handleSignIn = (e, email, password) => {
+  const handleSignIn = (e, name, email, password) => {
     e.preventDefault();
 
     if (type === "login") {
-    } else if (type === "sign-up") {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          setUser({ ...userCredential.user, isSignedIn: true });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          console.log(`${errorCode}: ${errorMessage}`);
+        });
+    } else if (type === "new account") {
+      console.log(
+        `User Has clicked Sign-Up Button: ${JSON.stringify(
+          { name, email, password },
+          null,
+          3
+        )})`
+      );
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(auth.currentUser, {
+            displayName: name,
+          }).then(() => {
+            setUser({ ...user, isSignedIn: true });
+            console.log('The display name has been set')
+          }).catch((error) => {
+            console.log('Error while updating profile')
+            console.log(error)
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUser({ ...userCredential.user, isSignedIn: true });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log(`${errorCode}: ${errorMessage}`);
-      });
   };
 
   const handleChange = (e) => {
-
     switch (e.target.name) {
       case "email":
         setEmail(e.target.value);
@@ -49,8 +69,6 @@ const Login = ({ type }) => {
         setPassword(e.target.value);
         break;
     }
-
-    console.log(name, email, password);
   };
 
   return (
@@ -76,7 +94,7 @@ const Login = ({ type }) => {
             </h1>
             <form
               className="space-y-4 md:space-y-6"
-              onSubmit={(e) => handleSignIn(e, email, password)}
+              onSubmit={(e) => handleSignIn(e, name, email, password)}
             >
               {type === "new account" ? (
                 <div>
@@ -84,7 +102,7 @@ const Login = ({ type }) => {
                     htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Your Name
+                    Your Full Name
                   </label>
                   <input
                     type="name"
@@ -161,13 +179,13 @@ const Login = ({ type }) => {
                 </div>
               ) : null}
               <button className="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                Sign in
+                {type === "login" ? "Login" : "Sign Up"}
               </button>
               {type === "login" ? (
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don’t have an account yet?{" "}
                   <Link
-                    href="/signup"
+                    href="/sign-up"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Sign up
