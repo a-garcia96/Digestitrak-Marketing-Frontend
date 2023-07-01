@@ -6,7 +6,6 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const Login = ({ type }) => {
@@ -14,7 +13,6 @@ const Login = ({ type }) => {
   const [email, setEmail] = useState(null);
   const [name, setName] = useState(null);
   const [password, setPassword] = useState(null);
-  const router = useRouter();
 
   const handleSignIn = (e, name, email, password) => {
     e.preventDefault();

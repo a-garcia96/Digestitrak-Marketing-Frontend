@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import Link from "next/link";
+import Logout from "../components/Logout/Logout";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
@@ -15,16 +16,19 @@ export default function Home() {
       </Head>
       <h1>GERD Tracker</h1>
       {user.isSignedIn && (
-        <h1>Welcome, you are currently signed-in as: {user.displayName}</h1>
+        <>
+          <h1>Welcome, you are currently signed-in as: {user.displayName}</h1>
+          <Logout />
+        </>
       )}
       {!user.isSignedIn && (
-      <>
-        <h1>Please login</h1>
-        <div className="bg-blue-500 max-w-[100px] rounded-full px-2 py-4 ml-4 text-center">
-          <Link href='/login'>Login</Link>
-        </div>
-      </>
-    )}
+        <>
+          <h1>Please login</h1>
+          <div className="bg-blue-500 max-w-[100px] rounded-full px-2 py-4 ml-4 text-center">
+            <Link href="/login">Login</Link>
+          </div>
+        </>
+      )}
     </div>
   );
 }
