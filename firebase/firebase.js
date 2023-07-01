@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,13 +17,16 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+
+// Get Firebase Doc
 const db = getFirestore(app);
 
 async function getPHDiary(db) {
-    const col = collection(db, 'PHDiary')
-    const diarySnapshot = await getDocs(col)
-    const diaryList = diarySnapshot.docs.map(doc => doc.data())
-    return diaryList
+  const col = collection(db, 'PHDiary')
+  const diarySnapshot = await getDocs(col)
+  const diaryList = diarySnapshot.docs.map(doc => doc.data())
+  return diaryList
 }
 
-export {getPHDiary}
+export { app, getPHDiary }
