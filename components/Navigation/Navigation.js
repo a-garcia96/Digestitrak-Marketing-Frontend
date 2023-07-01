@@ -1,13 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import Link from "next/link";
 import Logout from "../Logout/Logout";
 
 const Navigation = () => {
   const { user } = useContext(AuthContext);
+  const [navIsHidden, setNavIsHidden] = useState(true);
+
+  const handleClick = (e) => {
+    setNavIsHidden(!navIsHidden);
+  };
 
   return (
-    <header className="bg-white">
+    <header className="bg-gray-100">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-1 md:flex md:items-center md:gap-12">
@@ -30,33 +35,66 @@ const Navigation = () => {
           </div>
 
           <div className="md:flex md:items-center md:gap-12">
-            <nav aria-label="Global" className="hidden md:block">
-              <ul className="flex items-center gap-6 text-sm">
-                <li>
-                  <Link
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    href="/diary"
+            {user.isSignedIn && (
+              <nav aria-label="Global">
+                <ul
+                  className={`transition-all absolute bg-gray-200 h-screen p-4 inset-y-0 ${
+                    navIsHidden ? "-right-1/2 hidden" : "right-0 block"
+                  } md:bg-gray-100 md:relative flex flex-col gap-6 text-sm z-40 md:flex md:items-center`}
+                >
+                  <button
+                    className="p-2 text-gray-600 text-end transition hover:text-gray-600/75"
+                    onClick={handleClick}
                   >
-                    Food Diary
-                  </Link>
-                </li>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
+                  <li>
+                    <Link
+                      className="text-gray-500 transition hover:text-gray-500/75"
+                      href="/diary"
+                    >
+                      Food Diary
+                    </Link>
+                  </li>
 
-                <li>
-                  <Link
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    href="/symptom-tracker"
-                  >
-                    Symptom Tracker
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+                  <li>
+                    <Link
+                      className="text-gray-500 transition hover:text-gray-500/75"
+                      href="/symptom-tracker"
+                    >
+                      Symptom Tracker
+                    </Link>
+                  </li>
+                  <li>
+                    <div className="sm:flex sm:gap-4">
+                      <p className="text-gray-500 transition hover:text-gray-500/75 self-center font-bold">
+                        Welcome, {user.displayName}!
+                      </p>
+                      <Logout />
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            )}
 
             <div className="flex items-center gap-4">
               <div className="sm:flex sm:gap-4">
                 {user.isSignedIn && (
-                  <div className="flex gap-4 align-middle justify-between">
-                    <p className="text-gray-500 transition hover:text-gray-500/75">
+                  <div className="hidden sm:flex sm:gap-4">
+                    <p className="text-gray-500 transition hover:text-gray-500/75 self-center font-bold">
                       Welcome, {user.displayName}!
                     </p>
                     <Logout />
@@ -64,25 +102,28 @@ const Navigation = () => {
                 )}
 
                 {!user.isSignedIn && (
-                  <>
-                    <Link href="/login">
-                      <p className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow">
-                        Login
-                      </p>
-                    </Link>
-                    <div className={`${user.isSignedIn && "hidden"} sm:flex`}>
-                      <Link href="/sign-up">
-                        <p className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600">
-                          Register
-                        </p>
+                  <div className="flex gap-2">
+                    <button className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow">
+                      <Link href="/login">
+                        <p>Login</p>
                       </Link>
+                    </button>
+                    <div className={`${user.isSignedIn && "hidden"} sm:flex`}>
+                      <button className="rounded-md bg-gray-200 px-5 py-2.5 text-sm font-medium text-teal-600">
+                        <Link href="/sign-up">
+                          <p>Register</p>
+                        </Link>
+                      </button>
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
 
-              <div className="block md:hidden">
-                <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+              <div className={`${!user.isSignedIn ? 'hidden' : 'block'} md:hidden`}>
+                <button
+                  className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
+                  onClick={handleClick}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
