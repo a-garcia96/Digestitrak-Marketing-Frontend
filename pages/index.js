@@ -15,20 +15,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>GERD Tracker</h1>
-      {user.isSignedIn && (
-        <>
-          <h1>Welcome, you are currently signed-in as: {user.displayName}</h1>
-          <Logout />
-        </>
-      )}
-      {!user.isSignedIn && (
-        <>
-          <h1>Please login</h1>
-          <div className="bg-blue-500 max-w-[100px] rounded-full px-2 py-4 ml-4 text-center">
-            <Link href="/login">Login</Link>
-          </div>
-        </>
-      )}
     </div>
   );
 }
