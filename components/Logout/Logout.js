@@ -13,14 +13,21 @@ const Logout = () => {
       .then(() => {
         // Sign-out successful.
         setUser({ ...user, isSignedIn: false });
-        router.push('/')
+        router.push("/");
       })
       .catch((error) => {
         alert(error);
       });
   };
 
-  return <button className="bg-red-300 text-red-600 p-4 rounded-full" onClick={handleClick}>Logout</button>;
+  return (
+    <button
+      className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
+      onClick={handleClick}
+    >
+      Logout
+    </button>
+  );
 };
 
 export default Logout;
