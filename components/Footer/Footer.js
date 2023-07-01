@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
           <a
             className="inline-block rounded-full bg-teal-600 p-2 text-white shadow transition hover:bg-teal-500 sm:p-3 lg:p-4"
-            href="#MainContent"
+            href="#pageStart"
           >
             <span className="sr-only">Back to top</span>
 
@@ -79,52 +79,18 @@ const Footer = () => {
             </div>
 
             <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-              consequuntur amet culpa cum itaque neque.
+              Take control of your digestive health with our powerful web app
+              designed to help you manage and track your GERD (Gastroesophageal
+              Reflux Disease) symptoms. Whether you've just been diagnosed or
+              have been living with GERD for a while, our app provides the tools
+              and resources you need to understand your condition better, make
+              informed decisions, and improve your quality of life.
             </p>
           </div>
-
-          <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12">
-            <li>
-              <a
-                className="text-gray-700 transition hover:text-gray-700/75"
-                href="/"
-              >
-                About
-              </a>
-            </li>
-
-            <li>
-              <a
-                className="text-gray-700 transition hover:text-gray-700/75"
-                href="/"
-              >
-                Services
-              </a>
-            </li>
-
-            <li>
-              <a
-                className="text-gray-700 transition hover:text-gray-700/75"
-                href="/"
-              >
-                Projects
-              </a>
-            </li>
-
-            <li>
-              <a
-                className="text-gray-700 transition hover:text-gray-700/75"
-                href="/"
-              >
-                Blog
-              </a>
-            </li>
-          </ul>
         </div>
 
         <p className="mt-12 text-center text-sm text-gray-500 lg:text-right">
-          Copyright &copy; 2022. All rights reserved.
+          Copyright &copy; {new Date().getFullYear()}. All rights reserved.
         </p>
       </div>
     </footer>
