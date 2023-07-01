@@ -103,15 +103,15 @@ const Navigation = () => {
 
                 {!user.isSignedIn && (
                   <div className="flex gap-2">
-                    <button className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow">
+                    <button className="rounded-md bg-teal-600 text-sm font-medium text-white shadow">
                       <Link href="/login">
-                        <p>Login</p>
+                        <p className="px-5 py-2.5">Login</p>
                       </Link>
                     </button>
                     <div className={`${user.isSignedIn && "hidden"} sm:flex`}>
-                      <button className="rounded-md bg-gray-200 px-5 py-2.5 text-sm font-medium text-teal-600">
+                      <button className="rounded-md bg-gray-200 text-sm font-medium text-teal-600">
                         <Link href="/sign-up">
-                          <p>Register</p>
+                          <p className="px-5 py-2.5">Register</p>
                         </Link>
                       </button>
                     </div>
