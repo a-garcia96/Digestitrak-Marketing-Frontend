@@ -111,7 +111,7 @@ const Navigation = () => {
                     <div className={`${user.isSignedIn && "hidden"} sm:flex`}>
                       <button className="rounded-md bg-gray-200 text-sm font-medium text-teal-600">
                         <Link href="/sign-up">
-                          <p className="px-5 py-2.5">Register</p>
+                          <p className="px-5 py-2.5">Sign Up</p>
                         </Link>
                       </button>
                     </div>
