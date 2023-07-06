@@ -40,7 +40,7 @@ const Navigation = () => {
                 <ul
                   className={`transition-all absolute bg-gray-200 h-screen p-4 inset-y-0 ${
                     navIsHidden ? "-right-1/2 hidden" : "right-0 block"
-                  } flex flex-col gap-6 text-sm z-40 md:bg-gray-100 md:relative md:h-auto md:inset-y-auto md:right-auto md:flex md:flex-row md:items-center`}
+                  } flex flex-col gap-6 text-sm z-40 md:bg-transparent md:relative md:h-auto md:inset-y-auto md:right-auto md:flex md:flex-row md:items-center`}
                 >
                   <button
                     className="p-2 text-gray-600 text-end transition hover:text-gray-600/75 md:hidden"
