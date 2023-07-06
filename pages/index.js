@@ -4,11 +4,17 @@ import Link from "next/link";
 import Image from "next/image";
 import AuthContext from "../contexts/AuthContext";
 
+import WelcomeBanner from "../components/WelcomeBanner/WelcomeBanner";
+
 export default function Home() {
   const { user } = useContext(AuthContext);
 
   if (user.isSignedIn) {
-    return <h1>Welcome!</h1>;
+    return (
+      <>
+        <WelcomeBanner user={user} />
+      </>
+    )
   } else if (!user.isSignedIn) {
     return (
       <>
