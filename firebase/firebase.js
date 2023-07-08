@@ -22,11 +22,5 @@ const app = initializeApp(firebaseConfig);
 // Get Firebase Doc
 const db = getFirestore(app);
 
-async function getPHDiary(db) {
-  const col = collection(db, 'PHDiary')
-  const diarySnapshot = await getDocs(col)
-  const diaryList = diarySnapshot.docs.map(doc => doc.data())
-  return diaryList
-}
 
-export { app, getPHDiary }
+export { app }
