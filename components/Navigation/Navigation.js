@@ -12,7 +12,7 @@ const Navigation = () => {
   };
 
   return (
-    <header className="bg-gray-100" id="pageStart">
+    <header className="bg-transparent relative z-10" id="pageStart">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-1 md:flex md:items-center md:gap-12">
@@ -40,7 +40,7 @@ const Navigation = () => {
                 <ul
                   className={`transition-all absolute bg-gray-200 h-screen p-4 inset-y-0 ${
                     navIsHidden ? "-right-1/2 hidden" : "right-0 block"
-                  } flex flex-col gap-6 text-sm z-40 md:bg-gray-100 md:relative md:h-auto md:inset-y-auto md:right-auto md:flex md:flex-row md:items-center`}
+                  } flex flex-col gap-6 text-sm z-40 md:bg-transparent md:relative md:h-auto md:inset-y-auto md:right-auto md:flex md:flex-row md:items-center`}
                 >
                   <button
                     className="p-2 text-gray-600 text-end transition hover:text-gray-600/75 md:hidden"
@@ -111,7 +111,7 @@ const Navigation = () => {
                     <div className={`${user.isSignedIn && "hidden"} sm:flex`}>
                       <button className="rounded-md bg-gray-200 text-sm font-medium text-teal-600">
                         <Link href="/sign-up">
-                          <p className="px-5 py-2.5">Register</p>
+                          <p className="px-5 py-2.5">Sign Up</p>
                         </Link>
                       </button>
                     </div>
