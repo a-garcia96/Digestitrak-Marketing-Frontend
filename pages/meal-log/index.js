@@ -21,7 +21,7 @@ export async function getServerSideProps() {
 }
 
 const index = ({data}) => {
-    console.log(data.datac)
+    console.log(data.data)
 
   return <div>Meal Log</div>;
 };
