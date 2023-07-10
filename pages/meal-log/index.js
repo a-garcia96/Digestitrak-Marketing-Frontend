@@ -9,7 +9,7 @@ export async function getServerSideProps() {
   const data = querySnapshot.docs.map((doc) => {
     return {
       id: doc.id,
-      data: JSON.stringify(doc.data()),
+      data: JSON.parse(JSON.stringify(doc.data())),
     };
   });
 
