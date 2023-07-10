@@ -9,6 +9,7 @@ export async function getServerSideProps() {
   const data = querySnapshot.docs.map((doc) => {
     return {
       id: doc.id,
+      // For those of you still dealing with this you can continue with the JSON.parse(JSON.stringify) hack or you can make sure your data consists of easily-serializable primitives.
       data: JSON.parse(JSON.stringify(doc.data())),
     };
   });
