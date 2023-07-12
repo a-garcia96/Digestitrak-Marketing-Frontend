@@ -2,16 +2,8 @@ import React from "react";
 import Link from "next/link";
 
 const WelcomeBanner = ({ user }) => {
-
   return (
     <>
-      {/*
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
-*/}
-
       <header className="bg-gray-50">
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <div className="sm:flex sm:items-center sm:justify-between">
