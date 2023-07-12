@@ -1,18 +1,28 @@
 import React from "react";
 import { app } from "../../firebase/firebase";
-import { collection, orderBy, query, getDocs, getFirestore } from "firebase/firestore";
+import { collection, where, orderBy, query, getDocs, getFirestore } from "firebase/firestore";
+import nookies from "nookies";
 
 import DataEntryHeader from "../../components/DataEntryHeader/DataEntryHeader";
 import DataTable from "../../components/DataTable/DataTable";
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
+
   const db = getFirestore(app);
 
-  // QUERY TO ORDER BY STARTTIME
+  // const cookies = parseCookies()
+
+  // console.log(cookies)
+
+  const cookies = nookies.get(ctx)
+
+  console.log(JSON.stringify(cookies.uid))
+
+  // make refernce to collection
   const mealsRef = collection(db, "PHDiary")
-
-  const q = query(mealsRef, orderBy("startTime", "desc"))
-
+  //create query using reference and order by start time in descending order
+  const q = query(mealsRef, where("uid", "==", cookies.uid), orderBy("startTime", "desc"))
+  //get collection based on query
   const querySnapshot = await getDocs(q);
   const data = querySnapshot.docs.map((doc) => {
     return {
@@ -31,12 +41,12 @@ const index = ({ data }) => {
 
   return (
     <>
-    <header>
-      <DataEntryHeader />
-    </header>
-    <section className="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
-      <DataTable mealData={data} />
-    </section>
+      <header>
+        <DataEntryHeader />
+      </header>
+      <section className="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
+        <DataTable mealData={data} />
+      </section>
     </>
   );
 };
