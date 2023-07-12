@@ -1,6 +1,6 @@
 import React from "react";
 import { app } from "../../firebase/firebase";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { collection, orderBy, query, getDocs, getFirestore } from "firebase/firestore";
 
 import DataEntryHeader from "../../components/DataEntryHeader/DataEntryHeader";
 import DataTable from "../../components/DataTable/DataTable";
@@ -8,7 +8,12 @@ import DataTable from "../../components/DataTable/DataTable";
 export async function getServerSideProps() {
   const db = getFirestore(app);
 
-  const querySnapshot = await getDocs(collection(db, "PHDiary"));
+  // QUERY TO ORDER BY STARTTIME
+  const mealsRef = collection(db, "PHDiary")
+
+  const q = query(mealsRef, orderBy("startTime", "desc"))
+
+  const querySnapshot = await getDocs(q);
   const data = querySnapshot.docs.map((doc) => {
     return {
       id: doc.id,
