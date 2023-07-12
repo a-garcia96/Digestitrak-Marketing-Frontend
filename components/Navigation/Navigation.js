@@ -64,6 +64,14 @@ const Navigation = () => {
                   <li>
                     <Link
                       className="text-gray-500 transition hover:text-gray-500/75"
+                      href="/"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="text-gray-500 transition hover:text-gray-500/75"
                       href="/meal-log"
                     >
                       Food Diary
