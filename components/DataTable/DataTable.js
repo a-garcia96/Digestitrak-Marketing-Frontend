@@ -3,12 +3,6 @@ import React from "react";
 const DataTable = ({ mealData }) => {
   return (
     <>
-      {/*
-  Heads up! 👋
-
-  This component comes with some `rtl` classes. Please remove them if they are not needed in your project.
-*/}
-
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead>
@@ -30,26 +24,18 @@ const DataTable = ({ mealData }) => {
 
           <tbody className="divide-y divide-gray-200">
             {mealData.map((entry, index) => {
-              let isOdd = index % 2 !== 0;
+              let isOdd = index % 2 !== 0
+              let startTime = new Date(entry.data.startTime.seconds * 1000).toDateString()
+              let endTime = new Date(entry.data.endTime.seconds * 1000).toDateString()
 
-              let startTime = new Date(entry.data.startTime.seconds * 1000);
-              let endTime = new Date(entry.data.endTime.seconds * 1000);
-
-              let startMM = startTime.getMonth();
-              let startDD = startTime.getDate();
-              let startYY = startTime.getFullYear();
-
-              let endMM = endTime.getMonth();
-              let endDD = endTime.getDate();
-              let endYY = endTime.getFullYear();
               if (isOdd) {
                 return (
-                  <tr key={index} className="odd:bg-gray-50">
+                  <tr key={entry.id} className="odd:bg-gray-50">
                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                      {`${startMM}/${startDD}/${startYY}`}
+                      {startTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {`${endMM}/${endDD}/${endYY}`}
+                      {endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.meal == true ? "yes" : "no"}
@@ -61,12 +47,12 @@ const DataTable = ({ mealData }) => {
                 );
               } else {
                 return (
-                  <tr className="odd:bg-gray-50">
+                  <tr key={entry.id} className="odd:bg-gray-50">
                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                      {`${startMM}/${startDD}/${startYY}`}
+                        {startTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {`${endMM}/${endDD}/${endYY}`}
+                        {endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.meal == true ? "yes" : "no"}
