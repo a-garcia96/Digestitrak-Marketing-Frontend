@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const DataEntryHeader = ({ user }) => {
   return (
@@ -17,12 +18,14 @@ const DataEntryHeader = ({ user }) => {
             </div>
 
             <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-              <button
-                className="block rounded-lg bg-teal-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-600 focus:outline-none focus:ring"
-                type="button"
-              >
-                New Meal
-              </button>
+              <Link href="/new-entry">
+                <button
+                  className="block rounded-lg bg-teal-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-600 focus:outline-none focus:ring"
+                  type="button"
+                >
+                  New Meal
+                </button>
+              </Link>
             </div>
           </div>
         </div>

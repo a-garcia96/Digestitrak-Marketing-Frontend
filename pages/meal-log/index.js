@@ -1,27 +1,35 @@
 import React from "react";
 import { app } from "../../firebase/firebase";
-import { collection, where, orderBy, query, getDocs, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  where,
+  orderBy,
+  query,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
 import nookies from "nookies";
 
 import DataEntryHeader from "../../components/DataEntryHeader/DataEntryHeader";
 import DataTable from "../../components/DataTable/DataTable";
 
 export async function getServerSideProps(ctx) {
-
   const db = getFirestore(app);
 
   // const cookies = parseCookies()
 
   // console.log(cookies)
 
-  const cookies = nookies.get(ctx)
-
-  console.log(JSON.stringify(cookies.uid))
+  const cookies = nookies.get(ctx);
 
   // make refernce to collection
-  const mealsRef = collection(db, "PHDiary")
+  const mealsRef = collection(db, "PHDiary");
   //create query using reference and order by start time in descending order
-  const q = query(mealsRef, where("uid", "==", cookies.uid), orderBy("startTime", "desc"))
+  const q = query(
+    mealsRef,
+    where("uid", "==", cookies.uid),
+    orderBy("startTime", "desc")
+  );
   //get collection based on query
   const querySnapshot = await getDocs(q);
   const data = querySnapshot.docs.map((doc) => {
@@ -38,7 +46,6 @@ export async function getServerSideProps(ctx) {
 }
 
 const index = ({ data }) => {
-
   return (
     <>
       <header>
