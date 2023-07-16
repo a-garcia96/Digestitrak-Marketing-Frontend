@@ -1,47 +1,72 @@
 import React, { useState } from "react";
-import {doc, setDoc, Timestamp } from "firebase/firestore"
+import {
+  collection,
+  addDoc,
+  Timestamp,
+  getFirestore,
+} from "firebase/firestore";
+import { useRouter } from "next/router";
+import { db } from "../../firebase/firebase";
+import nookies from "nookies";
 
 const NewEntryForm = ({ entryType }) => {
-    const [ formData, setFormData ] = useState({})
+  const router = useRouter();
+  const cookies = nookies.get();
+  const [formData, setFormData] = useState({ uid: cookies.uid });
 
-    //data needed
-    // Start Time
-    // End Time
-    // Meal Boolean
-    // Comments
+  //data needed
+  // Start Time
+  // End Time
+  // Meal Boolean
+  // Comments
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
 
+    const docRef = await addDoc(collection(db, "PHDiary"), { ...formData });
+
+    console.log(docRef);
+    console.log("Document written with ID: ", docRef.id);
+
+    router.push('/meal-log')
+  };
+
+  const handleChange = (e) => {
+    const inputType = e.target.id;
+    const inputValue = e.target.value;
+
+    switch (inputType) {
+      case "startTime":
+        setFormData({
+          ...formData,
+          startTime: Timestamp.fromDate(new Date(inputValue)),
+        });
+        break;
+      case "endTime":
+        setFormData({
+          ...formData,
+          endTime: Timestamp.fromDate(new Date(inputValue)),
+        });
+        break;
+      case "comments":
+        setFormData({ ...formData, comments: inputValue });
+        break;
+      case "fullMeal":
+        setFormData({
+          ...formData,
+          fullMeal: inputValue == "Yes" ? true : false,
+        });
+        break;
     }
 
-    const handleChange = (e) => {
-        const inputType = e.target.id
-        const inputValue = e.target.value
-
-        switch(inputType){
-            case 'startTime':
-                setFormData({...formData, startTime: Timestamp.fromDate(new Date(inputValue))})
-                break;
-            case 'endTime':
-                setFormData({...formData, endTime: Timestamp.fromDate(new Date(inputValue))})
-                break;
-            case 'comments':
-                setFormData({...formData, comments: inputValue})
-                break;
-            case 'fullMeal':
-                setFormData({...formData, fullMeal: inputValue == 'Yes' ? true : false})
-                break;
-        }
-
-        console.log(formData)
-    }
-
+    console.log(formData);
+  };
 
   return (
     <>
       {entryType == "newMeal" ? (
-        <form className="w-[25%] mx-auto">
+        <form onSubmit={handleSubmit} className="w-[25%] mx-auto">
           <label
             htmlFor="startTime"
             className="block text-xs font-medium text-teal-500"
@@ -97,12 +122,18 @@ const NewEntryForm = ({ entryType }) => {
           <select
             name="fullMeal"
             id="fullMeal"
-            className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2 px-1"
+            className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2 px-1 mb-4"
             onChange={handleChange}
           >
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
+          <button
+            type="submit"
+            className="block rounded-lg bg-teal-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-600 focus:outline-none focus:ring mx-auto"
+          >
+            Submit
+          </button>
         </form>
       ) : (
         <h1>New Symptom</h1>
