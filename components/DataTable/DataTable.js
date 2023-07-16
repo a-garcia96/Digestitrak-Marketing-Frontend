@@ -14,7 +14,7 @@ const DataTable = ({ mealData }) => {
                 End Time
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Meal
+                Full Meal
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Comments
@@ -25,17 +25,19 @@ const DataTable = ({ mealData }) => {
           <tbody className="divide-y divide-gray-200">
             {mealData.map((entry, index) => {
               let isOdd = index % 2 !== 0
-              let startTime = new Date(entry.data.startTime.seconds * 1000).toDateString()
-              let endTime = new Date(entry.data.endTime.seconds * 1000).toDateString()
+              let startDate = new Date(entry.data.startTime.seconds * 1000).toDateString()
+              let endDate = new Date(entry.data.endTime.seconds * 1000).toDateString()
+              let startTime = new Date(entry.data.startTime.seconds * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+              let endTime = new Date(entry.data.endTime.seconds * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
 
               if (isOdd) {
                 return (
                   <tr key={entry.id} className="odd:bg-gray-50">
                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                      {startTime}
+                      {startDate + ' ' + startTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {endTime}
+                      {endDate + ' ' + endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.meal == true ? "yes" : "no"}
@@ -49,10 +51,10 @@ const DataTable = ({ mealData }) => {
                 return (
                   <tr key={entry.id} className="odd:bg-gray-50">
                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                        {startTime}
+                        {startDate + ' ' + startTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                        {endTime}
+                        {endDate + ' ' + endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.meal == true ? "yes" : "no"}
