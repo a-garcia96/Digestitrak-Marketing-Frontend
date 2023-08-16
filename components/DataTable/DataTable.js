@@ -1,6 +1,17 @@
 import React from "react";
+import { doc, deleteDoc } from "firebase/firestore";
+import { useRouter } from 'next/router';
+import { db } from "../../firebase/firebase";
 
 const DataTable = ({ mealData }) => {
+  const router = useRouter();
+
+  const handleDelete = async (e) => {
+    let key = e.target.parentElement.parentElement.getAttribute('data-key')
+    await deleteDoc(doc(db, "PHDiary", key))
+    router.reload()
+  };
+
   return (
     <>
       <div className="overflow-x-auto">
@@ -24,43 +35,69 @@ const DataTable = ({ mealData }) => {
 
           <tbody className="divide-y divide-gray-200">
             {mealData.map((entry, index) => {
-              let isOdd = index % 2 !== 0
-              let startDate = new Date(entry.data.startTime.seconds * 1000).toDateString()
-              let endDate = new Date(entry.data.endTime.seconds * 1000).toDateString()
-              let startTime = new Date(entry.data.startTime.seconds * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-              let endTime = new Date(entry.data.endTime.seconds * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+              let isOdd = index % 2 !== 0;
+              let startDate = new Date(
+                entry.data.startTime.seconds * 1000
+              ).toDateString();
+              let endDate = new Date(
+                entry.data.endTime.seconds * 1000
+              ).toDateString();
+              let startTime = new Date(
+                entry.data.startTime.seconds * 1000
+              ).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+              let endTime = new Date(
+                entry.data.endTime.seconds * 1000
+              ).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
               if (isOdd) {
                 return (
-                  <tr key={entry.id} className="odd:bg-gray-50">
+                  <tr data-key={entry.id} key={entry.id} className="odd:bg-gray-50">
                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                      {startDate + ' ' + startTime}
+                      {startDate + " " + startTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {endDate + ' ' + endTime}
+                      {endDate + " " + endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.meal == true ? "yes" : "no"}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.comments}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                      <button
+                        className="block rounded-lg bg-red-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-600 focus:outline-none focus:ring"
+                        type="button"
+                        onClick={handleDelete}
+                      >
+                        X
+                      </button>
                     </td>
                   </tr>
                 );
               } else {
                 return (
-                  <tr key={entry.id} className="odd:bg-gray-50">
+                  <tr data-key={entry.id} key={entry.id} className="odd:bg-gray-50">
                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                        {startDate + ' ' + startTime}
+                      {startDate + " " + startTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                        {endDate + ' ' + endTime}
+                      {endDate + " " + endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.meal == true ? "yes" : "no"}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.comments}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                      <button
+                        className="block rounded-lg bg-red-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-600 focus:outline-none focus:ring"
+                        type="button"
+                        onClick={handleDelete}
+                      >
+                        X
+                      </button>
                     </td>
                   </tr>
                 );
