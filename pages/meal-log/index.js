@@ -16,10 +16,6 @@ import DataTable from "../../components/DataTable/DataTable";
 export async function getServerSideProps(ctx) {
   const db = getFirestore(app);
 
-  // const cookies = parseCookies()
-
-  // console.log(cookies)
-
   const cookies = nookies.get(ctx);
 
   // make refernce to collection

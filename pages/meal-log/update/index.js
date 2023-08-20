@@ -1,16 +1,8 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { app } from "../../../firebase/firebase";
-import {
-  collection,
-  where,
-  orderBy,
-  query,
-  doc,
-  getDoc,
-  getFirestore,
-} from "firebase/firestore";
-import nookies from "nookies";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import UpdateEntryForm from "../../../components/UpdateEntryForm/UpdateEntryForm";
 
 export async function getServerSideProps(context) {
   const db = getFirestore(app);
@@ -28,11 +20,18 @@ export async function getServerSideProps(context) {
 }
 
 const index = ({ data }) => {
-    useEffect(() => {
-        console.log(data)
-    }, [])
+  const startTime = new Date(data.startTime.seconds * 1000);
+  const endTime = new Date(data.endTime.seconds * 1000)
+  const formattedStartTime = new Date(startTime.setHours(startTime.getHours() - 7)).toISOString().slice(0, -1)
+  const formattedEndTime = new Date(endTime.setHours(endTime.getHours() - 7)).toISOString().slice(0, -1)
 
-  return <div>Check the console</div>;
+  return (
+    <>
+      <UpdateEntryForm
+        data={{ ...data, formattedStartTime, formattedEndTime}}
+      />
+    </>
+  );
 };
 
 export default index;
