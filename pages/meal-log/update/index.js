@@ -15,11 +15,11 @@ export async function getServerSideProps(context) {
   const docSnapshot = await getDoc(docRef);
 
   return {
-    props: { data: JSON.parse(JSON.stringify(docSnapshot.data())) },
+    props: { data: JSON.parse(JSON.stringify(docSnapshot.data())), entryID: param },
   };
 }
 
-const index = ({ data }) => {
+const index = ({ data, entryID }) => {
   const startTime = new Date(data.startTime.seconds * 1000);
   const endTime = new Date(data.endTime.seconds * 1000)
   const formattedStartTime = new Date(startTime.setHours(startTime.getHours() - 7)).toISOString().slice(0, -1)
@@ -28,7 +28,7 @@ const index = ({ data }) => {
   return (
     <>
       <UpdateEntryForm
-        data={{ ...data, formattedStartTime, formattedEndTime}}
+        data={{ ...data}} formattedStartTime={formattedStartTime} formattedEndTime={formattedEndTime} entryID={entryID}
       />
     </>
   );

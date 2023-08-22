@@ -59,8 +59,6 @@ const NewEntryForm = ({ entryType }) => {
         });
         break;
     }
-
-    console.log(formData);
   };
 
   return (

@@ -1,35 +1,26 @@
 import React, { useState } from "react";
 import {
-  collection,
-  addDoc,
-  Timestamp,
-  getFirestore,
+  doc,
+  updateDoc,
+  Timestamp
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { db } from "../../firebase/firebase";
 import nookies from "nookies";
 
-const UpdateEntryForm = ({ data }) => {
-  const router = useRouter();
-  const cookies = nookies.get();
-  const [formData, setFormData] = useState({ uid: cookies.uid });
+const UpdateEntryForm = ({ data, entryID, formattedStartTime, formattedEndTime }) => {
+  const router = useRouter()
+  const cookies = nookies.get()
+  const [formData, setFormData] = useState({...data, uid: cookies.uid })
 
-  //data needed
-  // Start Time
-  // End Time
-  // Meal Boolean
-  // Comments
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // const entryRef = doc(db, "PHDiary", entryID)
+    // await updateDoc(entryRef, {...formData})
 
-    const docRef = await addDoc(collection(db, "PHDiary"), { ...formData });
-
-    console.log(docRef);
-    console.log("Document written with ID: ", docRef.id);
-
-    router.push("/meal-log");
+    console.log(formData)
+    // router.push("/meal-log");
   };
 
   const handleChange = (e) => {
@@ -38,12 +29,14 @@ const UpdateEntryForm = ({ data }) => {
 
     switch (inputType) {
       case "startTime":
+        formattedStartTime = inputValue
         setFormData({
           ...formData,
           startTime: Timestamp.fromDate(new Date(inputValue)),
         });
         break;
       case "endTime":
+        formattedEndTime = inputValue
         setFormData({
           ...formData,
           endTime: Timestamp.fromDate(new Date(inputValue)),
@@ -59,13 +52,11 @@ const UpdateEntryForm = ({ data }) => {
         });
         break;
     }
-
-    console.log(formData);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-[25%] mx-auto">
+      <form id="updateMealForm" onSubmit={handleSubmit} className="w-[25%] mx-auto">
         <label
           htmlFor="startTime"
           className="block text-xs font-medium text-teal-500"
@@ -76,7 +67,7 @@ const UpdateEntryForm = ({ data }) => {
         <input
           type="datetime-local"
           id="startTime"
-          value={data.formattedStartTime}
+          value={formattedStartTime}
           className="mt-1 w-full rounded-md border-teal-500 shadow-sm sm:text-sm py-2 mb-4"
           onChange={handleChange}
         />
@@ -91,7 +82,7 @@ const UpdateEntryForm = ({ data }) => {
         <input
           type="datetime-local"
           id="endTime"
-          value={data.formattedEndTime}
+          value={formattedEndTime}
           className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm py-2 mb-4"
           onChange={handleChange}
         />
@@ -127,8 +118,22 @@ const UpdateEntryForm = ({ data }) => {
           className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2 px-1 mb-4"
           onChange={handleChange}
         >
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
+          {data.meal && (
+            <>
+              <option value="Yes" selected>
+                Yes
+              </option>
+              <option value="No">No</option>
+            </>
+          )}
+          {!data.meal && (
+            <>
+              <option value="Yes">Yes</option>
+              <option value="No" selected>
+                No
+              </option>
+            </>
+          )}
         </select>
         <button
           type="submit"
