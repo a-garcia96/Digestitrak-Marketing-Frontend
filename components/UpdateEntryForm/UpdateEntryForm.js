@@ -1,26 +1,33 @@
 import React, { useState } from "react";
-import {
-  doc,
-  updateDoc,
-  Timestamp
-} from "firebase/firestore";
+import { doc, updateDoc, Timestamp } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { db } from "../../firebase/firebase";
 import nookies from "nookies";
 
-const UpdateEntryForm = ({ data, entryID, formattedStartTime, formattedEndTime }) => {
-  const router = useRouter()
-  const cookies = nookies.get()
-  const [formData, setFormData] = useState({...data, uid: cookies.uid })
-
+const UpdateEntryForm = ({ data, entryID }) => {
+  const router = useRouter();
+  const cookies = nookies.get();
+  const [formData, setFormData] = useState({ ...data, uid: cookies.uid });
+  let startTime = new Date(data.startTime.seconds * 1000);
+  let endTime = new Date(data.endTime.seconds * 1000);
+  const [formattedStartTime, setFormattedStartTime] = useState(
+    new Date(startTime.setHours(startTime.getHours() - 7))
+      .toISOString()
+      .slice(0, -1)
+  );
+  const [formattedEndTime, setFormattedEndTime] = useState(
+    new Date(endTime.setHours(endTime.getHours() - 7))
+      .toISOString()
+      .slice(0, -1)
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const entryRef = doc(db, "PHDiary", entryID)
-    // await updateDoc(entryRef, {...formData})
+    const entryRef = doc(db, "PHDiary", entryID);
+    await updateDoc(entryRef, { ...formData });
 
-    console.log(formData)
-    // router.push("/meal-log");
+    // console.log(formData)
+    router.push("/meal-log");
   };
 
   const handleChange = (e) => {
@@ -29,18 +36,20 @@ const UpdateEntryForm = ({ data, entryID, formattedStartTime, formattedEndTime }
 
     switch (inputType) {
       case "startTime":
-        formattedStartTime = inputValue
+        setFormattedStartTime(inputValue);
         setFormData({
           ...formData,
           startTime: Timestamp.fromDate(new Date(inputValue)),
         });
+        console.log(startTime);
         break;
       case "endTime":
-        formattedEndTime = inputValue
+        setFormattedEndTime(inputValue);
         setFormData({
           ...formData,
           endTime: Timestamp.fromDate(new Date(inputValue)),
         });
+        console.log(endTime);
         break;
       case "comments":
         setFormData({ ...formData, comments: inputValue });
@@ -56,7 +65,11 @@ const UpdateEntryForm = ({ data, entryID, formattedStartTime, formattedEndTime }
 
   return (
     <>
-      <form id="updateMealForm" onSubmit={handleSubmit} className="w-[25%] mx-auto">
+      <form
+        id="updateMealForm"
+        onSubmit={handleSubmit}
+        className="w-[25%] mx-auto"
+      >
         <label
           htmlFor="startTime"
           className="block text-xs font-medium text-teal-500"
@@ -97,7 +110,7 @@ const UpdateEntryForm = ({ data, entryID, formattedStartTime, formattedEndTime }
             className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 py-2 px-1"
             placeholder="comments"
             onChange={handleChange}
-            value={data.comments}
+            value={formData.comments}
           />
 
           <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-teal-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
@@ -117,23 +130,10 @@ const UpdateEntryForm = ({ data, entryID, formattedStartTime, formattedEndTime }
           id="fullMeal"
           className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2 px-1 mb-4"
           onChange={handleChange}
+          defaultValue={data.fullMeal == true ? "Yes" : "No"}
         >
-          {data.meal && (
-            <>
-              <option value="Yes" selected>
-                Yes
-              </option>
-              <option value="No">No</option>
-            </>
-          )}
-          {!data.meal && (
-            <>
-              <option value="Yes">Yes</option>
-              <option value="No" selected>
-                No
-              </option>
-            </>
-          )}
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
         </select>
         <button
           type="submit"
