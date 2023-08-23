@@ -64,7 +64,7 @@ const DataTable = ({ mealData }) => {
                       {endDate + " " + endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {entry.data.meal == true ? "yes" : "no"}
+                      {entry.data.fullMeal == true ? "yes" : "no"}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.comments}
@@ -105,7 +105,7 @@ const DataTable = ({ mealData }) => {
                       {endDate + " " + endTime}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {entry.data.meal == true ? "yes" : "no"}
+                      {entry.data.fullMeal == true ? "yes" : "no"}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.comments}
