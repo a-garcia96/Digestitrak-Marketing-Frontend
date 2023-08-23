@@ -70,23 +70,22 @@ const DataTable = ({ mealData }) => {
                       {entry.data.comments}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex gap-x-4">
+                      <Link
+                        href={{
+                          pathname: "/meal-log/update",
+                          query: { entry: entry.id },
+                        }}
+                      >
+                        <button className="block rounded-lg bg-gray-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-600 focus:outline-none focus:ring">
+                          edit
+                        </button>
+                      </Link>
                       <button
                         className="block rounded-lg bg-red-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-600 focus:outline-none focus:ring"
                         type="button"
                         onClick={handleDelete}
                       >
                         X
-                      </button>
-                      <button className="block rounded-lg bg-gray-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-600 focus:outline-none focus:ring">
-                        <Link
-                          className="block rounded-lg bg-gray-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-600 focus:outline-none focus:ring"
-                          href={{
-                            pathname: "/meal-log/update",
-                            query: { entry: entry.id },
-                          }}
-                        >
-                          edit
-                        </Link>
                       </button>
                     </td>
                   </tr>
@@ -111,23 +110,22 @@ const DataTable = ({ mealData }) => {
                       {entry.data.comments}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex gap-x-4">
+                      <Link
+                        href={{
+                          pathname: "/meal-log/update",
+                          query: { entry: entry.id },
+                        }}
+                      >
+                        <button className="block rounded-lg bg-gray-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-600 focus:outline-none focus:ring">
+                          edit
+                        </button>
+                      </Link>
                       <button
                         className="block rounded-lg bg-red-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-600 focus:outline-none focus:ring"
                         type="button"
                         onClick={handleDelete}
                       >
                         X
-                      </button>
-                      <button className="block rounded-lg bg-gray-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-600 focus:outline-none focus:ring">
-                        <Link
-                          className="block rounded-lg bg-gray-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-600 focus:outline-none focus:ring"
-                          href={{
-                            pathname: "/meal-log/update",
-                            query: { entry: entry.id },
-                          }}
-                        >
-                          edit
-                        </Link>
                       </button>
                     </td>
                   </tr>
