@@ -4,12 +4,14 @@ import { useRouter } from "next/router";
 import { db } from "../../firebase/firebase";
 import Link from "next/link";
 
-const DataTable = ({ mealData }) => {
+const DataTable = ({ mealData, dataType }) => {
   const router = useRouter();
+  const collection = dataType !== "symptoms" ? "PHDiary" : "symptom-tracker"
 
   const handleDelete = async (e) => {
+    console.log(collection)
     let key = e.target.parentElement.parentElement.getAttribute("data-key");
-    await deleteDoc(doc(db, "PHDiary", key));
+    await deleteDoc(doc(db, collection, key));
     router.reload();
   };
 
@@ -25,9 +27,11 @@ const DataTable = ({ mealData }) => {
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 End Time
               </th>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+              {dataType !== "symptoms" ? (
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Full Meal
-              </th>
+              </th> 
+              ) : (null)}
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Comments
               </th>
@@ -63,16 +67,18 @@ const DataTable = ({ mealData }) => {
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {endDate + " " + endTime}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                    {dataType !== "symptoms" ? (
+                      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.fullMeal == true ? "yes" : "no"}
                     </td>
+                    ) : (null)}
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.comments}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex gap-x-4">
                       <Link
                         href={{
-                          pathname: "/meal-log/update",
+                          pathname: dataType !== "symptom-tracker" ? "/meal-log/update": "/symptom-tracker/update",
                           query: { entry: entry.id },
                         }}
                       >
@@ -103,16 +109,18 @@ const DataTable = ({ mealData }) => {
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {endDate + " " + endTime}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                    {dataType !== "symptoms" ? (
+                      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.fullMeal == true ? "yes" : "no"}
                     </td>
+                    ) : (null)}
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {entry.data.comments}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex gap-x-4">
                       <Link
                         href={{
-                          pathname: "/meal-log/update",
+                          pathname: dataType !== "symptoms" ? "/meal-log/update": "symptom-tracker/update",
                           query: { entry: entry.id },
                         }}
                       >
