@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { doc, updateDoc, Timestamp } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { db } from "../../firebase/firebase";
@@ -8,6 +8,15 @@ const UpdateEntryForm = ({ data, entryID }) => {
   const router = useRouter();
   const cookies = nookies.get();
   const [formData, setFormData] = useState({ ...data, uid: cookies.uid });
+  const [entryType, setEntryType] = useState("PHDiary");
+  const path = router.pathname;
+
+  useEffect(() => {
+    if (path.includes("symptom-tracker")) {
+      setEntryType("symptom-tracker");
+    }
+  }, []);
+
   let startTime = new Date(data.startTime.seconds * 1000);
   let endTime = new Date(data.endTime.seconds * 1000);
   const [formattedStartTime, setFormattedStartTime] = useState(
@@ -23,11 +32,11 @@ const UpdateEntryForm = ({ data, entryID }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const entryRef = doc(db, "PHDiary", entryID);
+    const entryRef = doc(db, entryType, entryID);
     await updateDoc(entryRef, { ...formData });
 
     // console.log(formData)
-    router.push("/meal-log");
+    router.back();
   };
 
   const handleChange = (e) => {
@@ -118,23 +127,27 @@ const UpdateEntryForm = ({ data, entryID }) => {
           </span>
         </label>
 
-        <label
-          htmlFor="fullMeal"
-          className="block text-sm font-medium text-teal-500"
-        >
-          Was this a full meal?
-        </label>
+        {entryType == "PHDiary" ? (
+          <>
+            <label
+              htmlFor="fullMeal"
+              className="block text-sm font-medium text-teal-500"
+            >
+              Was this a full meal?
+            </label>
 
-        <select
-          name="fullMeal"
-          id="fullMeal"
-          className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2 px-1 mb-4"
-          onChange={handleChange}
-          defaultValue={data.fullMeal == true ? "Yes" : "No"}
-        >
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
+            <select
+              name="fullMeal"
+              id="fullMeal"
+              className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2 px-1 mb-4"
+              onChange={handleChange}
+              defaultValue={data.fullMeal == true ? "Yes" : "No"}
+            >
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </>
+        ) : null}
         <button
           type="submit"
           className="block rounded-lg bg-teal-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-600 focus:outline-none focus:ring mx-auto"

@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
 
-const DataEntryHeader = ({ user }) => {
+const DataEntryHeader = ({ page }) => {
+
+
+
+
   return (
     <>
       <header className="bg-gray-50">
@@ -9,11 +13,11 @@ const DataEntryHeader = ({ user }) => {
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="text-center sm:text-left">
               <h1 className="text-2xl font-bold text-teal-900 sm:text-3xl">
-                Your Meal Log
+                {page == "symptom-tracker" ? "Your Symptoms" : "Your Meal Log"}
               </h1>
 
               <p className="mt-1.5 text-sm text-gray-500">
-                Ate something recently? Log it!
+                {page == "symptom-tracker" ? "Feeling symptoms? Log it!" : "Ate something recently? Log it!"}
               </p>
             </div>
 
@@ -23,7 +27,7 @@ const DataEntryHeader = ({ user }) => {
                   className="block rounded-lg bg-teal-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-600 focus:outline-none focus:ring"
                   type="button"
                 >
-                  New Meal
+                  New {page == "symptom-tracker" ? "Symptom" : "Meal"}
                 </button>
               </Link>
             </div>

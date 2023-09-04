@@ -6,7 +6,7 @@ const Layout = ({children}) => {
   return (
     <>
       <Navigation />
-      <main>{children}</main>
+      <main className="min-h-[calc(100vh-64px-466px)]">{children}</main>
       <Footer />
     </>
   );
