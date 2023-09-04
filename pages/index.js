@@ -5,6 +5,7 @@ import Image from "next/image";
 import AuthContext from "../contexts/AuthContext";
 
 import WelcomeBanner from "../components/WelcomeBanner/WelcomeBanner";
+import Dashboard from "../components/Dashboard/Dashboard";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
@@ -12,9 +13,14 @@ export default function Home() {
   if (user.isSignedIn) {
     return (
       <>
-        <WelcomeBanner user={user} />
+        <section>
+          <WelcomeBanner user={user} />
+        </section>
+        <section>
+          <Dashboard />
+        </section>
       </>
-    )
+    );
   } else if (!user.isSignedIn) {
     return (
       <>
