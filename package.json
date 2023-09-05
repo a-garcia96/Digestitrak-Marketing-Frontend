@@ -18,7 +18,8 @@
     "nookies": "^2.5.2",
     "postcss": "^8.4.24",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-spinners": "^0.13.8"
   },
   "devDependencies": {
     "eslint": "8.42.0",
