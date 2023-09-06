@@ -1,6 +1,5 @@
 import {
   Card,
-  Title,
   Text,
   Metric,
   Grid,
@@ -10,16 +9,12 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Flex,
-  ProgressBar,
   Table,
   TableHead,
   TableHeaderCell,
   TableBody,
   TableRow,
   TableCell,
-  TableFoot,
-  TableFooterCell,
   Badge,
 } from "@tremor/react";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -31,12 +26,15 @@ import {
   query,
   getDocs,
   getFirestore,
+  Timestamp
 } from "firebase/firestore";
 import nookies from "nookies";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
+  const [currentDate, setCurrentDate] = useState(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
+  const firestoreTimeStamp = Timestamp.fromDate(currentDate)
 
   useEffect(() => {
     async function fetchData() {
@@ -50,11 +48,13 @@ export default function Dashboard() {
       const q1 = query(
         mealRef,
         where("uid", "==", cookies.uid),
+        where("startTime", ">", firestoreTimeStamp),
         orderBy("startTime", "desc")
       );
       const q2 = query(
         symptomRef,
         where("uid", "==", cookies.uid),
+        where("startTime", ">", firestoreTimeStamp),
         orderBy("startTime", "desc")
       );
       //get collection based on query
