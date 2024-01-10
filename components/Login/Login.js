@@ -8,6 +8,8 @@ import {
 } from "firebase/auth";
 import Link from "next/link";
 
+import Image from "next/image";
+
 const Login = ({ type }) => {
   const { user, setUser } = useContext(AuthContext);
   const [email, setEmail] = useState(null);
@@ -41,13 +43,15 @@ const Login = ({ type }) => {
           const user = userCredential.user;
           updateProfile(auth.currentUser, {
             displayName: name,
-          }).then(() => {
-            setUser({ ...user, isSignedIn: true });
-            console.log('The display name has been set')
-          }).catch((error) => {
-            console.log('Error while updating profile')
-            console.log(error)
           })
+            .then(() => {
+              setUser({ ...user, isSignedIn: true });
+              console.log("The display name has been set");
+            })
+            .catch((error) => {
+              console.log("Error while updating profile");
+              console.log(error);
+            });
         })
         .catch((error) => {
           console.log(error);
@@ -87,15 +91,13 @@ const Login = ({ type }) => {
           </div>
           <div className="mx-auto max-w-2xl py-32 sm:py-48">
             <div className="flex flex-col items-center justify-center px-6 mx-auto lg:py-0">
-              <button
-                className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-              >
-                <img
-                  className="w-8 h-8 mr-2"
-                  src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-                  alt="logo"
+              <button className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                <Image
+                  src="/digestitrak-logo-transparent.png"
+                  height={50}
+                  width={50}
                 />
-                <Link href="/">Gerd Tracker</Link>
+                <Link href="/">DegistiTrak</Link>
               </button>
               <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

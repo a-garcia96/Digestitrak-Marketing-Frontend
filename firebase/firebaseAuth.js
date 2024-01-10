@@ -13,10 +13,12 @@ const getAuthState = (action) => {
       // console.log(userObject.auth.currentUser.uid)
       action && action({ ...userObject, isSignedIn: true });
 
-      nookies.set(undefined, 'uid', userObject.auth.currentUser.uid, {path:'/'})
+      nookies.set(undefined, "uid", userObject.auth.currentUser.uid, {
+        path: "/",
+      });
     } else {
       // User is signed out
-      destroyCookie(null, 'uid')
+      destroyCookie(null, "uid");
     }
   });
 };
