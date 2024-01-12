@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Login from "../../components/Login/Login";
 import { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
 
-const index = () => {
+const Index = () => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
@@ -21,4 +21,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

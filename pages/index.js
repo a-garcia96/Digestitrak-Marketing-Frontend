@@ -54,9 +54,9 @@ export default function Home() {
                   digestive health
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Harness the power of data with DigestiTrack. Whether you've
-                  just been diagnosed or have been living with GERD, we provide
-                  you with the tools and resources.
+                  Harness the power of data with DigestiTrack. Whether
+                  you&apos;ve just been diagnosed or have been living with GERD,
+                  we provide you with the tools and resources.
                 </p>
               </div>
             </div>
