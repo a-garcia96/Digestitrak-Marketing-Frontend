@@ -129,11 +129,11 @@ export default function Home() {
             </p>
 
             <div className="mt-4 md:mt-8">
-              <Link href="/sign-up">
+              <a href="https://www.app.digestitrak.com/sign-up" target="_blank">
                 <p className="inline-block rounded bg-teal-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-teal-700 focus:outline-none focus:ring focus:ring-yellow-400">
                   Get Started Today
                 </p>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
