@@ -38,7 +38,7 @@ const Navigation = () => {
                   <div className={` sm:flex`}>
                     <button className="rounded-md bg-gray-200 text-sm font-medium text-teal-600">
                       <a
-                        href="https://www.app.digistitrak.com/sign-up"
+                        href="https://www.app.digestitrak.com/sign-up"
                         target="_blank"
                       >
                         <p className="px-5 py-2.5">Sign Up</p>
